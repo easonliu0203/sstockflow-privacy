@@ -16,145 +16,123 @@
     .effective-date { color: #666; font-size: 14px; margin-bottom: 32px; }
     h2 { font-size: 20px; margin-top: 32px; margin-bottom: 12px; color: #1a1a1a; }
     p, li { margin-bottom: 8px; font-size: 16px; }
-    ul { padding-left: 24px; }
+    ul { padding-left: 24px; margin-bottom: 8px; }
     .contact { margin-top: 32px; padding: 16px; background: #f0f4ff; border-radius: 8px; }
-    .section { display: none; }
-    .section.active { display: block; }
+    .loading { text-align: center; padding: 80px 0; color: #666; }
+    .error { text-align: center; padding: 80px 0; color: #c00; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="lang-switch">
-      <button id="btn-zh" class="active" onclick="switchLang('zh')">繁體中文</button>
+      <button id="btn-zh" class="active" onclick="switchLang('zh-TW')">繁體中文</button>
       <button id="btn-en" onclick="switchLang('en')">English</button>
     </div>
-    <div class="card">
-
-      <!-- 繁體中文 -->
-      <div id="lang-zh" class="section active">
-        <h1>SStockFlow 隱私權政策</h1>
-        <p class="effective-date">生效日期：2026 年 4 月 15 日 ｜ 版本 1.0</p>
-
-        <h2>一、前言</h2>
-        <p>SStockFlow（以下簡稱「本服務」）由 SStockFlow 團隊營運，致力於保護您的個人資料與隱私權。本政策說明我們如何蒐集、使用、儲存及保護您在使用本服務時所提供的資訊。</p>
-        <p>當您註冊或使用本服務，即表示您同意本隱私權政策的內容。</p>
-
-        <h2>二、我們蒐集的資料</h2>
-        <ul>
-          <li><strong>帳號資料：</strong>電子郵件地址、顯示名稱。透過 Google 或 Apple 登入時，我們會取得您授權的基本個人資訊（姓名、電子郵件）。</li>
-          <li><strong>公司/品牌資料：</strong>公司名稱、品牌名稱、負責人、統一編號、電話、地址、對外聯絡電子郵件。</li>
-          <li><strong>業務資料：</strong>商品、庫存、進貨、客戶、供應商、銷售訂單等您在使用本服務過程中主動輸入的營業資訊。</li>
-          <li><strong>裝置資訊：</strong>裝置類型、作業系統版本，用於登入裝置管理。</li>
-        </ul>
-
-        <h2>三、資料使用方式</h2>
-        <ul>
-          <li>提供、維護及改善本服務的功能</li>
-          <li>驗證您的身份並管理帳號安全</li>
-          <li>處理訂閱方案與帳務相關事宜</li>
-          <li>發送服務通知（如系統更新、安全警示）</li>
-          <li>分析使用趨勢以優化使用者體驗（僅使用匿名統計資料）</li>
-        </ul>
-
-        <h2>四、資料儲存與安全</h2>
-        <p>您的資料儲存於 Supabase 雲端平台（主機位於日本東京），採用業界標準的加密傳輸（TLS/SSL）及資料庫層級的存取控制（RLS）。</p>
-        <p>我們採取合理的技術與組織措施來保護您的資料，但無法保證網路傳輸的絕對安全性。</p>
-
-        <h2>五、資料分享與揭露</h2>
-        <p>我們不會將您的個人資料出售給第三方。僅在以下情況下可能分享您的資料：</p>
-        <ul>
-          <li>經您明確同意</li>
-          <li>為遵守法律義務或回應合法的政府要求</li>
-          <li>為保護本服務、使用者或公眾的權利與安全</li>
-          <li>與信任的服務供應商合作以營運本服務（如 Supabase、Google OAuth、Apple Sign-In），且這些供應商受到保密義務約束</li>
-        </ul>
-
-        <h2>六、您的權利</h2>
-        <ul>
-          <li><strong>查閱：</strong>您可隨時在應用程式中查看您的個人資料</li>
-          <li><strong>更正：</strong>您可自行修改公司資訊與個人顯示名稱</li>
-          <li><strong>刪除：</strong>您可聯繫我們要求刪除帳號及所有相關資料</li>
-          <li><strong>匯出：</strong>您可要求匯出您的業務資料</li>
-        </ul>
-
-        <h2>七、政策變更</h2>
-        <p>我們可能會不定期更新本隱私權政策。重大變更時，我們會透過應用程式內通知或電子郵件告知您。</p>
-        <p>建議您定期查閱本政策以了解最新內容。</p>
-
-        <h2>八、聯絡我們</h2>
-        <div class="contact">
-          <p><strong>電子郵件：</strong>relaygo.office@relaygo.pro</p>
-          <p><strong>服務名稱：</strong>SStockFlow 預約&庫存管理系統</p>
-        </div>
-      </div>
-
-      <!-- English -->
-      <div id="lang-en" class="section">
-        <h1>SStockFlow Privacy Policy</h1>
-        <p class="effective-date">Effective Date: April 15, 2026 | Version 1.0</p>
-
-        <h2>1. Introduction</h2>
-        <p>SStockFlow (hereinafter referred to as "the Service") is operated by the SStockFlow team. We are committed to protecting your personal data and privacy. This policy explains how we collect, use, store, and protect the information you provide when using the Service.</p>
-        <p>By registering for or using the Service, you agree to the terms of this Privacy Policy.</p>
-
-        <h2>2. Information We Collect</h2>
-        <ul>
-          <li><strong>Account Information:</strong> Email address and display name. When signing in via Google or Apple, we receive the basic personal information you authorize (name, email).</li>
-          <li><strong>Company/Brand Information:</strong> Company name, brand name, contact person, tax ID number, phone number, address, and public contact email.</li>
-          <li><strong>Business Data:</strong> Products, inventory, purchases, customers, suppliers, sales orders, and other business information you actively enter while using the Service.</li>
-          <li><strong>Device Information:</strong> Device type and operating system version, used for login device management.</li>
-        </ul>
-
-        <h2>3. How We Use Your Information</h2>
-        <ul>
-          <li>Providing, maintaining, and improving the features of the Service</li>
-          <li>Verifying your identity and managing account security</li>
-          <li>Processing subscription plans and billing matters</li>
-          <li>Sending service notifications (such as system updates and security alerts)</li>
-          <li>Analyzing usage trends to optimize user experience (using anonymous statistical data only)</li>
-        </ul>
-
-        <h2>4. Data Storage and Security</h2>
-        <p>Your data is stored on the Supabase cloud platform (servers located in Tokyo, Japan), using industry-standard encrypted transmission (TLS/SSL) and database-level access control (RLS).</p>
-        <p>We take reasonable technical and organizational measures to protect your data, but cannot guarantee the absolute security of internet transmission.</p>
-
-        <h2>5. Data Sharing and Disclosure</h2>
-        <p>We do not sell your personal data to third parties. We may share your information only in the following circumstances:</p>
-        <ul>
-          <li>With your explicit consent</li>
-          <li>To comply with legal obligations or respond to lawful government requests</li>
-          <li>To protect the rights and safety of the Service, users, or the public</li>
-          <li>In cooperation with trusted service providers to operate the Service (such as Supabase, Google OAuth, Apple Sign-In), who are bound by confidentiality obligations</li>
-        </ul>
-
-        <h2>6. Your Rights</h2>
-        <ul>
-          <li><strong>Access:</strong> You can view your personal data at any time within the application</li>
-          <li><strong>Correction:</strong> You can modify your company information and display name</li>
-          <li><strong>Deletion:</strong> You can contact us to request deletion of your account and all related data</li>
-          <li><strong>Export:</strong> You can request an export of your business data</li>
-        </ul>
-
-        <h2>7. Policy Changes</h2>
-        <p>We may update this Privacy Policy from time to time. In the event of significant changes, we will notify you through in-app notifications or email.</p>
-        <p>We recommend reviewing this policy periodically to stay informed of the latest content.</p>
-
-        <h2>8. Contact Us</h2>
-        <div class="contact">
-          <p><strong>Email:</strong> relaygo.office@relaygo.pro</p>
-          <p><strong>Service:</strong> SStockFlow Inventory Management System</p>
-        </div>
-      </div>
-
+    <div class="card" id="content">
+      <div class="loading" id="loading">載入中...</div>
     </div>
   </div>
+
   <script>
-    function switchLang(lang) {
-      document.getElementById('lang-zh').classList.toggle('active', lang === 'zh');
-      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    const SUPABASE_URL = 'https://hyssgufzwfripoaizixo.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5c3NndWZ6d2ZyaXBvYWl6aXhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4ODEzMDQsImV4cCI6MjA5MDQ1NzMwNH0.J1NcY5jsma72kpo_5yGKP9hXDThZvF39-pM55K9jh0w';
+
+    let policies = {};
+    let currentLang = 'zh-TW';
+
+    async function fetchPolicies() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/legal_documents?type=eq.privacy_policy&select=locale,title,content,version,effective_date`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        data.forEach(row => { policies[row.locale] = row; });
+        render();
+      } catch (e) {
+        document.getElementById('content').innerHTML =
+          '<div class="error">無法載入隱私權政策，請稍後再試。<br>Unable to load privacy policy.</div>';
+      }
     }
+
+    function parseContent(text) {
+      // Split into sections by numbered headings (Chinese or English)
+      // e.g. "一、前言" or "1. Introduction"
+      const lines = text.split('\n');
+      let html = '';
+      let inList = false;
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        // Chinese section headers: 一、 二、 etc.
+        if (/^[一二三四五六七八九十]+、/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<h2>${trimmed}</h2>`;
+        }
+        // English section headers: 1. 2. etc.
+        else if (/^\d+\.\s+[A-Z]/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<h2>${trimmed}</h2>`;
+        }
+        // Bullet points
+        else if (/^[•\-\d]+[.、)]\s*/.test(trimmed) || trimmed.startsWith('•')) {
+          if (!inList) { html += '<ul>'; inList = true; }
+          const content = trimmed.replace(/^[•\-]\s*/, '').replace(/^\d+[.、)]\s*/, '');
+          html += `<li>${content}</li>`;
+        }
+        // Contact block detection
+        else if (/^(電子郵件|Email|服務名稱|Service)[：:]/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          if (!html.includes('class="contact"')) html += '<div class="contact">';
+          html += `<p><strong>${trimmed.split(/[：:]/)[0]}：</strong>${trimmed.split(/[：:]/).slice(1).join(':')}</p>`;
+        }
+        else {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<p>${trimmed}</p>`;
+        }
+      }
+      if (inList) html += '</ul>';
+      if (html.includes('class="contact"') && !html.endsWith('</div>')) html += '</div>';
+      return html;
+    }
+
+    function render() {
+      const policy = policies[currentLang];
+      if (!policy) {
+        document.getElementById('content').innerHTML =
+          '<div class="error">找不到此語言的隱私權政策。</div>';
+        return;
+      }
+
+      const dateStr = policy.effective_date
+        ? new Date(policy.effective_date).toLocaleDateString(currentLang === 'zh-TW' ? 'zh-TW' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : '';
+      const versionLabel = currentLang === 'zh-TW' ? '版本' : 'Version';
+      const dateLabel = currentLang === 'zh-TW' ? '生效日期：' : 'Effective Date: ';
+
+      document.getElementById('content').innerHTML = `
+        <h1>${policy.title}</h1>
+        <p class="effective-date">${dateLabel}${dateStr} ｜ ${versionLabel} ${policy.version}</p>
+        ${parseContent(policy.content)}
+      `;
+    }
+
+    function switchLang(lang) {
+      currentLang = lang;
+      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh-TW');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      render();
+    }
+
+    fetchPolicies();
   </script>
 </body>
 </html>
