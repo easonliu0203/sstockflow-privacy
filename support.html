@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SStockFlow - Support / 支援中心</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.8; color: #333; background: #f9f9f9; }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+    .lang-switch { text-align: right; margin-bottom: 24px; }
+    .lang-switch button { padding: 8px 16px; margin-left: 8px; border: 1px solid #ccc; border-radius: 6px; background: #fff; cursor: pointer; font-size: 14px; }
+    .lang-switch button.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+    .card { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    h1 { font-size: 28px; margin-bottom: 8px; color: #1a1a1a; }
+    .effective-date { color: #666; font-size: 14px; margin-bottom: 32px; }
+    h2 { font-size: 20px; margin-top: 32px; margin-bottom: 12px; color: #1a1a1a; }
+    h3 { font-size: 16px; margin-top: 20px; margin-bottom: 6px; color: #1a73e8; font-weight: 600; }
+    p, li { margin-bottom: 8px; font-size: 16px; }
+    ul { padding-left: 24px; margin-bottom: 8px; }
+    .contact { margin-top: 32px; padding: 16px; background: #f0f4ff; border-radius: 8px; }
+    .loading { text-align: center; padding: 80px 0; color: #666; }
+    .error { text-align: center; padding: 80px 0; color: #c00; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="lang-switch">
+      <button id="btn-zh" class="active" onclick="switchLang('zh-TW')">繁體中文</button>
+      <button id="btn-en" onclick="switchLang('en')">English</button>
+    </div>
+    <div class="card" id="content">
+      <div class="loading" id="loading">載入中...</div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://hyssgufzwfripoaizixo.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5c3NndWZ6d2ZyaXBvYWl6aXhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4ODEzMDQsImV4cCI6MjA5MDQ1NzMwNH0.J1NcY5jsma72kpo_5yGKP9hXDThZvF39-pM55K9jh0w';
+
+    let docs = {};
+    let currentLang = 'zh-TW';
+
+    async function fetchDocs() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/legal_documents?type=eq.support&select=locale,title,content,version,effective_date`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        data.forEach(row => { docs[row.locale] = row; });
+        render();
+      } catch (e) {
+        document.getElementById('content').innerHTML =
+          '<div class="error">無法載入支援資訊，請稍後再試。<br>Unable to load support information.</div>';
+      }
+    }
+
+    function parseContent(text) {
+      const lines = text.split('\n');
+      let html = '';
+      let inList = false;
+      let contactOpen = false;
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        // Chinese section headers: 一、 二、 三、
+        if (/^[一二三四五六七八九十]+、/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          if (contactOpen) { html += '</div>'; contactOpen = false; }
+          html += `<h2>${trimmed}</h2>`;
+        }
+        // English section headers: 1. 2. 3.
+        else if (/^\d+\.\s+[A-Z]/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          if (contactOpen) { html += '</div>'; contactOpen = false; }
+          html += `<h2>${trimmed}</h2>`;
+        }
+        // FAQ questions: Q1： or Q1:
+        else if (/^Q\d+[：:]/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          if (contactOpen) { html += '</div>'; contactOpen = false; }
+          html += `<h3>${trimmed}</h3>`;
+        }
+        // Bullet points
+        else if (/^[•\-]\s+/.test(trimmed)) {
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += `<li>${trimmed.replace(/^[•\-]\s+/, '')}</li>`;
+        }
+        // Contact block
+        else if (/^(電子郵件|Email|服務名稱|Service)[：:]/.test(trimmed)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          if (!contactOpen) { html += '<div class="contact">'; contactOpen = true; }
+          const parts = trimmed.split(/[：:]/);
+          html += `<p><strong>${parts[0]}：</strong>${parts.slice(1).join(':')}</p>`;
+        }
+        else {
+          if (inList) { html += '</ul>'; inList = false; }
+          if (contactOpen) { html += '</div>'; contactOpen = false; }
+          html += `<p>${trimmed}</p>`;
+        }
+      }
+      if (inList) html += '</ul>';
+      if (contactOpen) html += '</div>';
+      return html;
+    }
+
+    function render() {
+      const doc = docs[currentLang];
+      if (!doc) {
+        document.getElementById('content').innerHTML =
+          '<div class="error">找不到此語言的支援資訊。</div>';
+        return;
+      }
+
+      const dateStr = doc.effective_date
+        ? new Date(doc.effective_date).toLocaleDateString(currentLang === 'zh-TW' ? 'zh-TW' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : '';
+      const versionLabel = currentLang === 'zh-TW' ? '版本' : 'Version';
+      const dateLabel = currentLang === 'zh-TW' ? '更新日期：' : 'Updated: ';
+
+      document.getElementById('content').innerHTML = `
+        <h1>${doc.title}</h1>
+        <p class="effective-date">${dateLabel}${dateStr} ｜ ${versionLabel} ${doc.version}</p>
+        ${parseContent(doc.content)}
+      `;
+    }
+
+    function switchLang(lang) {
+      currentLang = lang;
+      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh-TW');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      render();
+    }
+
+    fetchDocs();
+  </script>
+</body>
+</html>
